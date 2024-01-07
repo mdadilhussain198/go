@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Made with Go... & htmx</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>
+        Welcome to thala-verse
+    </h1>
+    <form hx-get="thala/verdict" hx-target="#result" hx-swap="innerHTML">
+        <input type="text" placeholder="Enter a thala string" name="inputThala">
+        <input type="submit" value="Go">
+    </form>
+    <br>
+    <div id="result">
+    </div>
+</body>
+</html>
