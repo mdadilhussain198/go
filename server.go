@@ -4,18 +4,24 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	r := mux.NewRouter()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
 
-    r.HandleFunc("/", handler)
+	r.HandleFunc("/", handler)
 	r.HandleFunc("/thala", handler)
 	r.HandleFunc("/thala/verdict", verdict)
 
-	http.ListenAndServe(":8081", r)
+	port = ":" + port
+	http.ListenAndServe(port, r)
 }
 
 func handler(writer http.ResponseWriter, request *http.Request) {
