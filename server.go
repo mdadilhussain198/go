@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -15,6 +14,8 @@ func main() {
 	if port == "" {
 		port = "8081"
 	}
+	fs := http.FileServer(http.Dir("static/"))
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 
 	r.HandleFunc("/", handler)
 	r.HandleFunc("/thala", handler)
@@ -31,5 +32,10 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 
 func verdict(writer http.ResponseWriter, request *http.Request) {
 	str := request.FormValue("inputThala")
-	fmt.Fprintf(writer, "%s\n", str)
+	tmpl := template.Must(template.ParseFiles("./resources/templates/blocks.html"))
+	if len(str) != 7 {
+		tmpl.ExecuteTemplate(writer, "moye-moye", nil)
+	} else {
+		tmpl.ExecuteTemplate(writer, "bole-koyal", nil)
+	}
 }
